@@ -1,0 +1,35 @@
+name: Build Blackjack Windows EXE
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller pillow
+
+      - name: Build executable
+        run: |
+          pyinstaller --onefile --add-data "cartas;cartas" blackjack.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: blackjack-windows-exe
+          path: dist/blackjack.exe
