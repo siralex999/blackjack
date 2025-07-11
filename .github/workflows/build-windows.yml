@@ -29,7 +29,8 @@ jobs:
           pyinstaller --onefile --add-data "cartas;cartas" blackjack.py
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: blackjack-windows-exe
           path: dist/blackjack.exe
+
